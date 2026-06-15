@@ -1,6 +1,7 @@
 import { z } from "zod";
 
-// CONTRACT: mirrors backend src/patients/dto/* — keep field names/validation in sync.
+// CONTRACT: mirrors backend src/patients/dto/{create,update}-patient.dto.ts — keep
+// field names + validation in sync. No shared package by design (see docs/TRADEOFFS.md).
 // zod v4: top-level z.email() replaces the deprecated z.string().email() method.
 export const patientSchema = z.object({
   id: z.string(),

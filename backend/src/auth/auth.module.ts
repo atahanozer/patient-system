@@ -14,6 +14,8 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService): JwtModuleOptions => ({
+        // DEMO: JWT_SECRET comes from env; .env.example ships a dev-only placeholder.
+        // Rotate to a secret-managed value in prod (see docs/TRADEOFFS.md).
         secret: config.getOrThrow<string>('JWT_SECRET'),
         // `expiresIn` is typed as ms's `StringValue` template-literal union. The env
         // schema constrains the value to `^\d+[smhd]$`, so this cast is honest.

@@ -1,5 +1,8 @@
 import { IsDateString, IsEmail, IsString, MinLength } from 'class-validator';
 
+// CONTRACT: mirrored by the frontend zod schema in
+// frontend/src/lib/contracts/patient.ts (patientFormSchema) — keep field
+// names + validation rules in sync. No shared package by design (see TRADEOFFS.md).
 export class CreatePatientDto {
   @IsString()
   @MinLength(1)
