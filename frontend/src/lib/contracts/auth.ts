@@ -2,8 +2,8 @@ import { z } from "zod";
 
 // CONTRACT: mirrors backend src/auth/* — POST /auth/login → { token, user }.
 export const loginSchema = z.object({
-  email: z.email(),
-  password: z.string().min(1),
+  email: z.email("Enter a valid email"),
+  password: z.string().min(1, "Password is required"),
 });
 export type LoginInput = z.infer<typeof loginSchema>;
 
