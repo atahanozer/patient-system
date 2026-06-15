@@ -1,0 +1,56 @@
+# Patients Management System — full stack in one command:
+#   docker compose up --build
+# Brings up Postgres + backend (auto-migrate + seed) + frontend.
+#
+# Port notes:
+#   - frontend  -> host :3000  (browser origin)
+#   - backend   -> host :3001  (browser-reachable API; matches NEXT_PUBLIC_API_URL)
+#   - db        -> NOT published. A local `patient-pg` container already owns host
+#     :5432; compose talks to its own db over the internal network (host `db`),
+#     so there's no need to publish it and no port conflict.
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: patients
+      POSTGRES_PASSWORD: patients
+      POSTGRES_DB: patients
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U patients -d patients"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # In-compose DB host is the `db` service, not localhost.
+      DATABASE_URL: postgresql://patients:patients@db:5432/patients?schema=public
+      JWT_SECRET: dev-only-change-me-in-prod
+      JWT_EXPIRES_IN: 1h
+      CHAOS_ENABLED: "true"
+      CHAOS_FAILURE_RATE: "0.15"
+      CORS_ORIGIN: http://localhost:3000
+      PORT: "3001"
+    ports:
+      - "3001:3001"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # BROWSER-reachable backend URL, inlined into the client bundle at build.
+        NEXT_PUBLIC_API_URL: http://localhost:3001
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata:
