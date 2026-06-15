@@ -23,6 +23,9 @@ async function bootstrap() {
   // Single registration of the catch-all error filter (not also via APP_FILTER).
   app.useGlobalFilters(new HttpExceptionFilter());
 
+  // Route SIGTERM/SIGINT through Nest lifecycle hooks (→ PrismaService.onModuleDestroy).
+  app.enableShutdownHooks();
+
   // PORT comes from validated config (default 3001), not raw process.env.
   const port = config.get<number>('PORT') ?? 3001;
   await app.listen(port);

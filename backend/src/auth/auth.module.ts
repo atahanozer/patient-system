@@ -15,10 +15,14 @@ import { JwtStrategy } from './strategies/jwt.strategy';
       inject: [ConfigService],
       useFactory: (config: ConfigService): JwtModuleOptions => ({
         secret: config.getOrThrow<string>('JWT_SECRET'),
-        // TRADE-OFF: `expiresIn` is typed as ms's `StringValue` (a template-literal union);
-        // the value is a validated env string ('1h' etc.), so cast at this boundary.
+        // `expiresIn` is typed as ms's `StringValue` template-literal union. The env
+        // schema constrains the value to `^\d+[smhd]$`, so this cast is honest.
         signOptions: {
-          expiresIn: (config.get<string>('JWT_EXPIRES_IN') ?? '1h') as `${number}h`,
+          expiresIn: config.getOrThrow<string>('JWT_EXPIRES_IN') as `${number}${
+            | 's'
+            | 'm'
+            | 'h'
+            | 'd'}`,
         },
       }),
     }),

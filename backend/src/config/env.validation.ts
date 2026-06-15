@@ -16,7 +16,12 @@ const booleanFromString = (defaultValue: boolean) =>
 export const envSchema = z.object({
   DATABASE_URL: z.string().url(),
   JWT_SECRET: z.string().min(8),
-  JWT_EXPIRES_IN: z.string().default('1h'),
+  // Constrain to jsonwebtoken's short-form (e.g. 60s/15m/1h/7d) so the cast in
+  // AuthModule is honest and a bad value fails fast at boot rather than at sign time.
+  JWT_EXPIRES_IN: z
+    .string()
+    .regex(/^\d+[smhd]$/, 'JWT_EXPIRES_IN must look like 60s, 15m, 1h or 7d')
+    .default('1h'),
   CHAOS_ENABLED: booleanFromString(true),
   CHAOS_FAILURE_RATE: z.coerce.number().min(0).max(1).default(0.15),
   CORS_ORIGIN: z.string().default('http://localhost:3000'),
