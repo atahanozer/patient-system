@@ -8,7 +8,7 @@ import { Loader2Icon } from "lucide-react";
 
 import { useAuth } from "@/lib/auth/auth-context";
 import { loginSchema, type LoginInput } from "@/lib/contracts/auth";
-import type { ApiError } from "@/lib/api/client";
+import { isApiError } from "@/lib/api/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -19,15 +19,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-function isApiError(value: unknown): value is ApiError {
-  return (
-    typeof value === "object" &&
-    value !== null &&
-    "status" in value &&
-    typeof (value as { status: unknown }).status === "number"
-  );
-}
 
 export default function LoginPage() {
   const router = useRouter();

@@ -5,19 +5,10 @@ import { useParams } from "next/navigation";
 import { AlertTriangleIcon, ArrowLeftIcon, UserXIcon } from "lucide-react";
 
 import { usePatient } from "@/lib/patients/hooks";
-import type { ApiError } from "@/lib/api/client";
+import { isApiError } from "@/lib/api/client";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PatientDetail } from "@/components/patients/patient-detail";
-
-function isApiError(value: unknown): value is ApiError {
-  return (
-    typeof value === "object" &&
-    value !== null &&
-    "status" in value &&
-    typeof (value as { status: unknown }).status === "number"
-  );
-}
 
 function DetailSkeleton() {
   return (

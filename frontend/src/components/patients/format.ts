@@ -1,20 +1,24 @@
 import { format, parseISO } from "date-fns";
 
+/**
+ * Format an ISO date/datetime string as e.g. "Jan 1, 1990", falling back to the
+ * raw input if it can't be parsed. Date-only strings (e.g. a `yyyy-MM-dd` DOB)
+ * are parsed without timezone shifting.
+ */
+function formatIso(value: string): string {
+  try {
+    return format(parseISO(value), "MMM d, yyyy");
+  } catch {
+    return value;
+  }
+}
+
 /** Format a `yyyy-MM-dd` date-of-birth string as e.g. "Jan 1, 1990". */
 export function formatDob(dob: string): string {
-  try {
-    // DOB is a date-only string; parse without timezone shifting.
-    return format(parseISO(dob), "MMM d, yyyy");
-  } catch {
-    return dob;
-  }
+  return formatIso(dob);
 }
 
 /** Format an ISO timestamp (e.g. createdAt) as e.g. "Jan 1, 2024". */
 export function formatDate(iso: string): string {
-  try {
-    return format(parseISO(iso), "MMM d, yyyy");
-  } catch {
-    return iso;
-  }
+  return formatIso(iso);
 }

@@ -11,6 +11,16 @@ export interface ApiError {
   message: string;
 }
 
+/** Narrow an unknown thrown value to our normalized {@link ApiError}. */
+export function isApiError(value: unknown): value is ApiError {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "status" in value &&
+    typeof (value as { status: unknown }).status === "number"
+  );
+}
+
 /** Backend error envelope: { statusCode, message, error, timestamp, path }. */
 interface BackendErrorBody {
   statusCode?: number;

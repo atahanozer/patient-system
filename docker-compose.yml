@@ -40,6 +40,19 @@ services:
       PORT: "3001"
     ports:
       - "3001:3001"
+    healthcheck:
+      # node:20-slim has no curl/wget, so use Node's global fetch.
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://localhost:3001/health').then(r=>{process.exit(r.ok?0:1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   frontend:
     build:
@@ -48,7 +61,9 @@ services:
         # BROWSER-reachable backend URL, inlined into the client bundle at build.
         NEXT_PUBLIC_API_URL: http://localhost:3001
     depends_on:
-      - backend
+      # Only start once the API is actually serving /health.
+      backend:
+        condition: service_healthy
     ports:
       - "3000:3000"
 

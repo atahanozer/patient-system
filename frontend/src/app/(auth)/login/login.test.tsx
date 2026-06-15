@@ -65,4 +65,18 @@ describe("LoginPage", () => {
       expect(loginMock).toHaveBeenCalledWith("admin@demo.health", "Admin123!");
     });
   });
+
+  it("redirects to /patients after a successful login", async () => {
+    const user = userEvent.setup();
+    loginMock.mockResolvedValue(undefined);
+    render(<LoginPage />);
+
+    await user.type(screen.getByLabelText(/email/i), "admin@demo.health");
+    await user.type(screen.getByLabelText(/password/i), "Admin123!");
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
+
+    await waitFor(() => {
+      expect(pushMock).toHaveBeenCalledWith("/patients");
+    });
+  });
 });
