@@ -30,3 +30,13 @@ export const paginatedPatientsSchema = z.object({
   total: z.number(),
 });
 export type PaginatedPatients = z.infer<typeof paginatedPatientsSchema>;
+
+/**
+ * Normalize a wire `dob` (which may be a full ISO string like
+ * `1815-12-10T00:00:00.000Z`) to the `yyyy-MM-dd` value an
+ * `<input type="date">` requires. Anything already `yyyy-MM-dd` or shorter is
+ * returned untouched, so blank/partial values can't be corrupted.
+ */
+export function toDateInputValue(iso: string): string {
+  return iso.length >= 10 ? iso.slice(0, 10) : iso;
+}

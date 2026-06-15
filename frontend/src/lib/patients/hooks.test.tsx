@@ -23,9 +23,13 @@ vi.mock("sonner", () => ({
   toast: { error: vi.fn(), success: vi.fn() },
 }));
 
-import { deletePatient } from "./api";
+import { createPatient, deletePatient, updatePatient } from "./api";
 import { toast } from "sonner";
-import { useDeletePatient } from "./hooks";
+import {
+  useCreatePatient,
+  useDeletePatient,
+  useUpdatePatient,
+} from "./hooks";
 
 const params: ListParams = { page: 1, limit: 10 };
 
@@ -86,6 +90,82 @@ describe("useDeletePatient optimistic rollback", () => {
     expect(restored?.total).toBe(2);
 
     // And the user is told the delete failed.
+    expect(toast.error).toHaveBeenCalled();
+  });
+});
+
+describe("useCreatePatient optimistic rollback", () => {
+  beforeEach(() => {
+    vi.mocked(createPatient).mockReset();
+    vi.mocked(toast.error).mockReset();
+  });
+
+  it("removes the optimistic temp row and restores the cache on error", async () => {
+    const { qc, seeded } = seedCache();
+    vi.mocked(createPatient).mockRejectedValue(new Error("503"));
+
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <QueryClientProvider client={qc}>{children}</QueryClientProvider>
+    );
+
+    const { result } = renderHook(() => useCreatePatient(params), { wrapper });
+
+    // Fire the mutation — it optimistically prepends a temp row, then fails.
+    result.current.mutate({
+      firstName: "New",
+      lastName: "Patient",
+      email: "new@demo.health",
+      phoneNumber: "+1 555 111 2222",
+      dob: "2000-05-05",
+    });
+
+    await waitFor(() => {
+      expect(result.current.isError).toBe(true);
+    });
+
+    // Cache must be restored to exactly the previous value — temp row gone.
+    const restored = qc.getQueryData<PaginatedPatients>(["patients", params]);
+    expect(restored).toEqual(seeded);
+    expect(restored?.data).toHaveLength(2);
+    expect(restored?.total).toBe(2);
+    expect(restored?.data.some((p) => p.id.startsWith("optimistic-"))).toBe(
+      false,
+    );
+
+    // And the user is told the create failed.
+    expect(toast.error).toHaveBeenCalled();
+  });
+});
+
+describe("useUpdatePatient optimistic rollback", () => {
+  beforeEach(() => {
+    vi.mocked(updatePatient).mockReset();
+    vi.mocked(toast.error).mockReset();
+  });
+
+  it("reverts the optimistic patch and restores the cache on error", async () => {
+    const { qc, seeded } = seedCache();
+    vi.mocked(updatePatient).mockRejectedValue(new Error("503"));
+
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <QueryClientProvider client={qc}>{children}</QueryClientProvider>
+    );
+
+    const { result } = renderHook(() => useUpdatePatient(params), { wrapper });
+
+    // Fire the mutation — it optimistically patches patient "1", then fails.
+    result.current.mutate({ id: "1", body: { firstName: "Changed" } });
+
+    await waitFor(() => {
+      expect(result.current.isError).toBe(true);
+    });
+
+    // Cache must be restored to exactly the previous value — patch reverted.
+    const restored = qc.getQueryData<PaginatedPatients>(["patients", params]);
+    expect(restored).toEqual(seeded);
+    expect(restored?.data.find((p) => p.id === "1")?.firstName).toBe("First1");
+
+    // And the user is told the update failed.
     expect(toast.error).toHaveBeenCalled();
   });
 });

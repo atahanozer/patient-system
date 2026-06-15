@@ -7,6 +7,7 @@ import { Loader2Icon } from "lucide-react";
 
 import {
   patientFormSchema,
+  toDateInputValue,
   type Patient,
   type PatientForm,
 } from "@/lib/contracts/patient";
@@ -50,8 +51,10 @@ function toDefaults(patient: Patient | null | undefined): PatientForm {
     lastName: patient.lastName,
     email: patient.email,
     phoneNumber: patient.phoneNumber,
-    // dob round-trips as a `yyyy-MM-dd` string; the API stores it the same way.
-    dob: patient.dob,
+    // The wire `dob` may be a full ISO string (e.g. `1815-12-10T00:00:00.000Z`),
+    // but `<input type="date">` only renders `yyyy-MM-dd` — otherwise it shows
+    // blank. Normalize to the date part so the value survives the edit round-trip.
+    dob: toDateInputValue(patient.dob),
   };
 }
 
