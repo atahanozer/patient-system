@@ -73,8 +73,8 @@
   --success-foreground: oklch(1 0 0);
   --warning: oklch(0.6461 0.1943 41.12); /* #ea580c */
   --warning-foreground: oklch(1 0 0);
-  --border: oklch(0.9350 0.0074 80.72); /* #ece9e4 */
-  --input: oklch(0.9350 0.0074 80.72);
+  --border: oklch(0.935 0.0074 80.72); /* #ece9e4 */
+  --input: oklch(0.935 0.0074 80.72);
   --ring: oklch(0.5461 0.2152 262.88); /* ring = primary */
   --chart-1: oklch(0.5461 0.2152 262.88);
   --chart-2: oklch(0.6271 0.1699 149.21);
@@ -88,7 +88,7 @@
   --sidebar-primary-foreground: oklch(1 0 0);
   --sidebar-accent: oklch(0.9699 0.0013 106.42);
   --sidebar-accent-foreground: oklch(0.2161 0.0061 56.04);
-  --sidebar-border: oklch(0.9350 0.0074 80.72);
+  --sidebar-border: oklch(0.935 0.0074 80.72);
   --sidebar-ring: oklch(0.5461 0.2152 262.88);
 }
 
@@ -96,39 +96,39 @@
   /* Warm Trust — dark. Warm stone-950 surfaces, lightened blue primary. */
   --background: oklch(0.2161 0.0061 56.04); /* stone-950 #1c1917 */
   --foreground: oklch(0.9848 0.0013 106.42); /* #fafaf9 */
-  --card: oklch(0.2685 0.0063 34.30); /* #292524 */
+  --card: oklch(0.2685 0.0063 34.3); /* #292524 */
   --card-foreground: oklch(0.9848 0.0013 106.42);
-  --popover: oklch(0.2685 0.0063 34.30);
+  --popover: oklch(0.2685 0.0063 34.3);
   --popover-foreground: oklch(0.9848 0.0013 106.42);
-  --primary: oklch(0.6231 0.1880 259.81); /* lightened blue #3b82f6 for contrast */
+  --primary: oklch(0.6231 0.188 259.81); /* lightened blue #3b82f6 for contrast */
   --primary-foreground: oklch(0.2161 0.0061 56.04);
-  --secondary: oklch(0.2685 0.0063 34.30);
+  --secondary: oklch(0.2685 0.0063 34.3);
   --secondary-foreground: oklch(0.9848 0.0013 106.42);
-  --muted: oklch(0.2685 0.0063 34.30);
-  --muted-foreground: oklch(0.7100 0.0100 58.07);
-  --accent: oklch(0.2685 0.0063 34.30);
+  --muted: oklch(0.2685 0.0063 34.3);
+  --muted-foreground: oklch(0.71 0.01 58.07);
+  --accent: oklch(0.2685 0.0063 34.3);
   --accent-foreground: oklch(0.9848 0.0013 106.42);
   --destructive: oklch(0.704 0.191 22.216);
-  --success: oklch(0.7000 0.1700 149.21);
+  --success: oklch(0.7 0.17 149.21);
   --success-foreground: oklch(0.2161 0.0061 56.04);
-  --warning: oklch(0.7000 0.1800 50.00);
+  --warning: oklch(0.7 0.18 50);
   --warning-foreground: oklch(0.2161 0.0061 56.04);
   --border: oklch(0.3581 0.0066 67.62); /* #3f3c39 */
   --input: oklch(0.3581 0.0066 67.62);
-  --ring: oklch(0.6231 0.1880 259.81); /* ring = primary */
-  --chart-1: oklch(0.6231 0.1880 259.81);
-  --chart-2: oklch(0.7000 0.1700 149.21);
-  --chart-3: oklch(0.7000 0.1800 50.00);
-  --chart-4: oklch(0.7100 0.0100 58.07);
+  --ring: oklch(0.6231 0.188 259.81); /* ring = primary */
+  --chart-1: oklch(0.6231 0.188 259.81);
+  --chart-2: oklch(0.7 0.17 149.21);
+  --chart-3: oklch(0.7 0.18 50);
+  --chart-4: oklch(0.71 0.01 58.07);
   --chart-5: oklch(0.9848 0.0013 106.42);
-  --sidebar: oklch(0.2685 0.0063 34.30);
+  --sidebar: oklch(0.2685 0.0063 34.3);
   --sidebar-foreground: oklch(0.9848 0.0013 106.42);
-  --sidebar-primary: oklch(0.6231 0.1880 259.81);
+  --sidebar-primary: oklch(0.6231 0.188 259.81);
   --sidebar-primary-foreground: oklch(0.2161 0.0061 56.04);
   --sidebar-accent: oklch(0.2161 0.0061 56.04);
   --sidebar-accent-foreground: oklch(0.9848 0.0013 106.42);
   --sidebar-border: oklch(0.3581 0.0066 67.62);
-  --sidebar-ring: oklch(0.6231 0.1880 259.81);
+  --sidebar-ring: oklch(0.6231 0.188 259.81);
 }
 
 @layer base {

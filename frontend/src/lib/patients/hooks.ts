@@ -1,16 +1,7 @@
-import {
-  keepPreviousData,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import type {
-  PaginatedPatients,
-  Patient,
-  PatientForm,
-} from "@/lib/contracts/patient";
+import type { PaginatedPatients, Patient, PatientForm } from "@/lib/contracts/patient";
 import {
   createPatient,
   deletePatient,
@@ -55,9 +46,7 @@ export function useCreatePatient(params: ListParams) {
         updatedAt: now,
       };
       qc.setQueryData<PaginatedPatients>(key, (o) =>
-        o
-          ? { ...o, data: [optimistic, ...o.data], total: o.total + 1 }
-          : o,
+        o ? { ...o, data: [optimistic, ...o.data], total: o.total + 1 } : o,
       );
       return { prev };
     },
@@ -86,9 +75,7 @@ export function useUpdatePatient(params: ListParams) {
           ? {
               ...o,
               data: o.data.map((p) =>
-                p.id === id
-                  ? { ...p, ...body, updatedAt: new Date().toISOString() }
-                  : p,
+                p.id === id ? { ...p, ...body, updatedAt: new Date().toISOString() } : p,
               ),
             }
           : o,

@@ -31,9 +31,7 @@ const DETAIL_LIST_PARAMS: ListParams = { page: 1, limit: 10 };
 function Field({ label, value }: { label: string; value: string }) {
   return (
     <div className="space-y-1">
-      <dt className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-        {label}
-      </dt>
+      <dt className="text-xs font-medium tracking-wide text-muted-foreground uppercase">{label}</dt>
       <dd className="text-sm">{value}</dd>
     </div>
   );
@@ -79,11 +77,7 @@ export function PatientDetail({ patient }: { patient: Patient }) {
               <PencilIcon className="size-4" />
               Edit
             </Button>
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={() => setDeleteOpen(true)}
-            >
+            <Button variant="destructive" size="sm" onClick={() => setDeleteOpen(true)}>
               <Trash2Icon className="size-4" />
               Delete
             </Button>

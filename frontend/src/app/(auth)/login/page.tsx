@@ -50,12 +50,8 @@ export default function LoginPage() {
     <main className="flex min-h-svh flex-1 items-center justify-center px-4 py-12">
       <div className="w-full max-w-sm space-y-6 rounded-xl border border-border bg-card p-6 shadow-sm">
         <div className="space-y-1.5 text-center">
-          <h1 className="text-xl font-semibold tracking-tight">
-            Patient System
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Sign in to manage patients
-          </p>
+          <h1 className="text-xl font-semibold tracking-tight">Patient System</h1>
+          <p className="text-sm text-muted-foreground">Sign in to manage patients</p>
         </div>
 
         {formError ? (
@@ -68,11 +64,7 @@ export default function LoginPage() {
         ) : null}
 
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            noValidate
-            className="space-y-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} noValidate className="space-y-4">
             <FormField
               control={form.control}
               name="email"

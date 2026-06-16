@@ -5,18 +5,8 @@ import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { apiClient } from "@/lib/api/client";
-import {
-  loginResponseSchema,
-  type AuthUser,
-} from "@/lib/contracts/auth";
-import {
-  clearToken,
-  clearUser,
-  getToken,
-  getUser,
-  setToken,
-  setUser,
-} from "@/lib/auth/storage";
+import { loginResponseSchema, type AuthUser } from "@/lib/contracts/auth";
+import { clearToken, clearUser, getToken, getUser, setToken, setUser } from "@/lib/auth/storage";
 
 interface AuthContextValue {
   user: AuthUser | null;
@@ -86,18 +76,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
   const isLoading = !isMounted;
 
-  const login = React.useCallback(
-    async (email: string, password: string) => {
-      const res = await apiClient.post("/auth/login", { email, password });
-      const { token: nextToken, user: nextUser } = loginResponseSchema.parse(
-        res.data,
-      );
-      setToken(nextToken);
-      setUser(nextUser);
-      setSession({ token: nextToken, user: nextUser });
-    },
-    [],
-  );
+  const login = React.useCallback(async (email: string, password: string) => {
+    const res = await apiClient.post("/auth/login", { email, password });
+    const { token: nextToken, user: nextUser } = loginResponseSchema.parse(res.data);
+    setToken(nextToken);
+    setUser(nextUser);
+    setSession({ token: nextToken, user: nextUser });
+  }, []);
 
   const logout = React.useCallback(() => {
     clearToken();

@@ -1,7 +1,4 @@
-import axios, {
-  type AxiosError,
-  type InternalAxiosRequestConfig,
-} from "axios";
+import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
 
 import { clearToken, clearUser, getToken } from "@/lib/auth/storage";
 
@@ -73,10 +70,7 @@ apiClient.interceptors.response.use(
 
     const normalized: ApiError = {
       status,
-      message:
-        backendMessage(error.response?.data) ??
-        error.message ??
-        "Something went wrong",
+      message: backendMessage(error.response?.data) ?? error.message ?? "Something went wrong",
     };
 
     return Promise.reject(normalized);

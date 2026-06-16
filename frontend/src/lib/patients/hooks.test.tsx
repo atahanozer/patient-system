@@ -1,10 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import * as React from "react";
 import { renderHook, waitFor } from "@testing-library/react";
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import type { PaginatedPatients } from "@/lib/contracts/patient";
 import type { ListParams } from "./api";
@@ -25,11 +22,7 @@ vi.mock("sonner", () => ({
 
 import { createPatient, deletePatient, updatePatient } from "./api";
 import { toast } from "sonner";
-import {
-  useCreatePatient,
-  useDeletePatient,
-  useUpdatePatient,
-} from "./hooks";
+import { useCreatePatient, useDeletePatient, useUpdatePatient } from "./hooks";
 
 const params: ListParams = { page: 1, limit: 10 };
 
@@ -128,9 +121,7 @@ describe("useCreatePatient optimistic rollback", () => {
     expect(restored).toEqual(seeded);
     expect(restored?.data).toHaveLength(2);
     expect(restored?.total).toBe(2);
-    expect(restored?.data.some((p) => p.id.startsWith("optimistic-"))).toBe(
-      false,
-    );
+    expect(restored?.data.some((p) => p.id.startsWith("optimistic-"))).toBe(false);
 
     // And the user is told the create failed.
     expect(toast.error).toHaveBeenCalled();

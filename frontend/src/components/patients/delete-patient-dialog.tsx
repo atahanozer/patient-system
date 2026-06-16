@@ -52,15 +52,12 @@ export function DeletePatientDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>Delete patient?</AlertDialogTitle>
           <AlertDialogDescription>
-            This will permanently remove{" "}
-            <span className="font-medium text-foreground">{name}</span> from the
-            system. This action cannot be undone.
+            This will permanently remove <span className="font-medium text-foreground">{name}</span>{" "}
+            from the system. This action cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={deleteMutation.isPending}>
-            Cancel
-          </AlertDialogCancel>
+          <AlertDialogCancel disabled={deleteMutation.isPending}>Cancel</AlertDialogCancel>
           <AlertDialogAction
             variant="destructive"
             onClick={handleConfirm}

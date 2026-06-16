@@ -47,29 +47,20 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-svh flex-col">
       <header className="flex h-14 items-center justify-between border-b border-border px-4">
         <div className="flex items-center gap-2">
-          <span className="text-base font-semibold tracking-tight">
-            Patient System
-          </span>
+          <span className="text-base font-semibold tracking-tight">Patient System</span>
         </div>
 
         <div className="flex items-center gap-3">
           {user ? (
             <div className="flex items-center gap-2">
-              <span className="hidden text-sm text-muted-foreground sm:inline">
-                {user.email}
-              </span>
+              <span className="hidden text-sm text-muted-foreground sm:inline">{user.email}</span>
               <Badge variant={user.role === "admin" ? "default" : "secondary"}>
                 {user.role.toUpperCase()}
               </Badge>
             </div>
           ) : null}
           <ThemeToggle />
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={logout}
-            aria-label="Log out"
-          >
+          <Button variant="ghost" size="sm" onClick={logout} aria-label="Log out">
             <LogOutIcon className="size-4" />
             <span className="hidden sm:inline">Logout</span>
           </Button>

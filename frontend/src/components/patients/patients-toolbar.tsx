@@ -18,19 +18,16 @@ import {
 import type { SortBy, SortOrder } from "./patients-table";
 
 /** Encodes a (field, order) pair into a single Select value, and back. */
-const SORT_OPTIONS: { value: string; label: string; by: SortBy; order: SortOrder }[] =
-  [
-    { value: "lastName:asc", label: "Last name (A–Z)", by: "lastName", order: "asc" },
-    { value: "lastName:desc", label: "Last name (Z–A)", by: "lastName", order: "desc" },
-    { value: "firstName:asc", label: "First name (A–Z)", by: "firstName", order: "asc" },
-    { value: "firstName:desc", label: "First name (Z–A)", by: "firstName", order: "desc" },
-    { value: "dob:asc", label: "DOB (oldest)", by: "dob", order: "asc" },
-    { value: "dob:desc", label: "DOB (newest)", by: "dob", order: "desc" },
-  ];
+const SORT_OPTIONS: { value: string; label: string; by: SortBy; order: SortOrder }[] = [
+  { value: "lastName:asc", label: "Last name (A–Z)", by: "lastName", order: "asc" },
+  { value: "lastName:desc", label: "Last name (Z–A)", by: "lastName", order: "desc" },
+  { value: "firstName:asc", label: "First name (A–Z)", by: "firstName", order: "asc" },
+  { value: "firstName:desc", label: "First name (Z–A)", by: "firstName", order: "desc" },
+  { value: "dob:asc", label: "DOB (oldest)", by: "dob", order: "asc" },
+  { value: "dob:desc", label: "DOB (newest)", by: "dob", order: "desc" },
+];
 
-const SORT_ITEMS = Object.fromEntries(
-  SORT_OPTIONS.map((o) => [o.value, o.label]),
-);
+const SORT_ITEMS = Object.fromEntries(SORT_OPTIONS.map((o) => [o.value, o.label]));
 
 interface PatientsToolbarProps {
   search: string;

@@ -8,10 +8,7 @@ export function TableSkeleton({ rows = 6 }: { rows?: number }) {
   return (
     <div data-testid="table-skeleton" className="space-y-3" aria-hidden="true">
       {Array.from({ length: rows }).map((_, i) => (
-        <div
-          key={i}
-          className="flex items-center gap-3 rounded-lg border border-border p-3"
-        >
+        <div key={i} className="flex items-center gap-3 rounded-lg border border-border p-3">
           <Skeleton className="size-8 rounded-full" />
           <div className="flex-1 space-y-2">
             <Skeleton className="h-3.5 w-40" />

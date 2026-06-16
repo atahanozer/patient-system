@@ -30,12 +30,7 @@ function pageItems(page: number, pageCount: number): (number | "ellipsis")[] {
   return items;
 }
 
-export function PaginationBar({
-  page,
-  limit,
-  total,
-  onPageChange,
-}: PaginationBarProps) {
+export function PaginationBar({ page, limit, total, onPageChange }: PaginationBarProps) {
   const pageCount = Math.max(1, Math.ceil(total / limit));
   const from = total === 0 ? 0 : (page - 1) * limit + 1;
   const to = Math.min(page * limit, total);

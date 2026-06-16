@@ -8,28 +8,18 @@ import type { Patient } from "@/lib/contracts/patient";
 import { usePatients } from "@/lib/patients/hooks";
 import type { ListParams } from "@/lib/patients/api";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  PatientsTable,
-  type SortBy,
-  type SortOrder,
-} from "@/components/patients/patients-table";
+import { PatientsTable, type SortBy, type SortOrder } from "@/components/patients/patients-table";
 import { PatientsToolbar } from "@/components/patients/patients-toolbar";
 import { PaginationBar } from "@/components/patients/pagination-bar";
 import { TableSkeleton } from "@/components/patients/table-states";
 
 // Code-split the mutation dialogs: they are only needed once a user interacts.
 const PatientFormDialog = dynamic(
-  () =>
-    import("@/components/patients/patient-form-dialog").then(
-      (m) => m.PatientFormDialog,
-    ),
+  () => import("@/components/patients/patient-form-dialog").then((m) => m.PatientFormDialog),
   { ssr: false },
 );
 const DeletePatientDialog = dynamic(
-  () =>
-    import("@/components/patients/delete-patient-dialog").then(
-      (m) => m.DeletePatientDialog,
-    ),
+  () => import("@/components/patients/delete-patient-dialog").then((m) => m.DeletePatientDialog),
   { ssr: false },
 );
 
@@ -73,8 +63,7 @@ function PatientsView() {
     [page, search, sortBy, sortOrder],
   );
 
-  const { data, isLoading, isError, isPlaceholderData, refetch } =
-    usePatients(listParams);
+  const { data, isLoading, isError, isPlaceholderData, refetch } = usePatients(listParams);
 
   // Write a new query string (shallow replace — no scroll jump, no history spam).
   const updateParams = React.useCallback(
@@ -138,11 +127,7 @@ function PatientsView() {
         <h1 className="text-lg font-semibold tracking-tight">Patients</h1>
         {/* Subtle hint that a background refetch (e.g. pagination) is in flight. */}
         {isPlaceholderData ? (
-          <span
-            className="text-xs text-muted-foreground"
-            role="status"
-            aria-live="polite"
-          >
+          <span className="text-xs text-muted-foreground" role="status" aria-live="polite">
             Updating…
           </span>
         ) : null}
@@ -171,12 +156,7 @@ function PatientsView() {
       />
 
       {!isLoading && !isError && total > 0 ? (
-        <PaginationBar
-          page={page}
-          limit={PAGE_SIZE}
-          total={total}
-          onPageChange={onPageChange}
-        />
+        <PaginationBar page={page} limit={PAGE_SIZE} total={total} onPageChange={onPageChange} />
       ) : null}
 
       {formOpen ? (

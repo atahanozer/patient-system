@@ -2,13 +2,7 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import {
-  ArrowDownIcon,
-  ArrowUpDownIcon,
-  ArrowUpIcon,
-  PencilIcon,
-  Trash2Icon,
-} from "lucide-react";
+import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon, PencilIcon, Trash2Icon } from "lucide-react";
 
 import type { Patient } from "@/lib/contracts/patient";
 import { useAuth } from "@/lib/auth/auth-context";
@@ -60,11 +54,7 @@ function SortableHeader({
 }) {
   const active = sortBy === field;
   const next: SortOrder = active && sortOrder === "asc" ? "desc" : "asc";
-  const Icon = !active
-    ? ArrowUpDownIcon
-    : sortOrder === "asc"
-      ? ArrowUpIcon
-      : ArrowDownIcon;
+  const Icon = !active ? ArrowUpDownIcon : sortOrder === "asc" ? ArrowUpIcon : ArrowDownIcon;
 
   return (
     <TableHead className={className}>
@@ -75,11 +65,7 @@ function SortableHeader({
         className="-mx-1 inline-flex items-center gap-1 rounded px-1 font-medium hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
       >
         {label}
-        <Icon
-          className={
-            active ? "size-3.5 text-foreground" : "size-3.5 text-muted-foreground"
-          }
-        />
+        <Icon className={active ? "size-3.5 text-foreground" : "size-3.5 text-muted-foreground"} />
       </button>
     </TableHead>
   );
@@ -139,10 +125,7 @@ export function PatientsTable({
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
 
-  const goToDetail = React.useCallback(
-    (id: string) => router.push(`/patients/${id}`),
-    [router],
-  );
+  const goToDetail = React.useCallback((id: string) => router.push(`/patients/${id}`), [router]);
 
   if (isLoading) return <TableSkeleton />;
   if (isError) return <ErrorState onRetry={onRetry} />;
@@ -195,32 +178,17 @@ export function PatientsTable({
               >
                 <TableCell className="px-4 py-3">
                   <div className="flex items-center gap-3">
-                    <PatientAvatar
-                      firstName={p.firstName}
-                      lastName={p.lastName}
-                    />
+                    <PatientAvatar firstName={p.firstName} lastName={p.lastName} />
                     <span className="font-medium">
                       {p.firstName} {p.lastName}
                     </span>
                   </div>
                 </TableCell>
-                <TableCell className="py-3 text-muted-foreground">
-                  {p.email}
-                </TableCell>
-                <TableCell className="py-3 text-muted-foreground">
-                  {p.phoneNumber}
-                </TableCell>
-                <TableCell className="py-3 text-muted-foreground">
-                  {formatDob(p.dob)}
-                </TableCell>
+                <TableCell className="py-3 text-muted-foreground">{p.email}</TableCell>
+                <TableCell className="py-3 text-muted-foreground">{p.phoneNumber}</TableCell>
+                <TableCell className="py-3 text-muted-foreground">{formatDob(p.dob)}</TableCell>
                 <TableCell className="px-4 py-3 text-right">
-                  {isAdmin ? (
-                    <RowActions
-                      patient={p}
-                      onEdit={onEdit}
-                      onDelete={onDelete}
-                    />
-                  ) : null}
+                  {isAdmin ? <RowActions patient={p} onEdit={onEdit} onDelete={onDelete} /> : null}
                 </TableCell>
               </TableRow>
             ))}
@@ -250,16 +218,12 @@ export function PatientsTable({
                 <p className="truncate font-medium">
                   {p.firstName} {p.lastName}
                 </p>
-                <p className="truncate text-sm text-muted-foreground">
-                  {p.email}
-                </p>
+                <p className="truncate text-sm text-muted-foreground">{p.email}</p>
                 <p className="truncate text-sm text-muted-foreground">
                   {p.phoneNumber} · {formatDob(p.dob)}
                 </p>
               </div>
-              {isAdmin ? (
-                <RowActions patient={p} onEdit={onEdit} onDelete={onDelete} />
-              ) : null}
+              {isAdmin ? <RowActions patient={p} onEdit={onEdit} onDelete={onDelete} /> : null}
             </div>
           </li>
         ))}

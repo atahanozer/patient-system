@@ -145,9 +145,7 @@ describe("PatientsTable", () => {
     expect(screen.getAllByText("First1 Last1").length).toBeGreaterThan(0);
     // Admin sees edit + delete controls (at least one of each).
     expect(screen.getAllByRole("button", { name: /edit/i }).length).toBeGreaterThan(0);
-    expect(
-      screen.getAllByRole("button", { name: /delete/i }).length,
-    ).toBeGreaterThan(0);
+    expect(screen.getAllByRole("button", { name: /delete/i }).length).toBeGreaterThan(0);
   });
 
   it("(d-user) does NOT render Edit or Delete actions when the role is user", () => {
@@ -167,8 +165,6 @@ describe("PatientsTable", () => {
     expect(screen.getAllByText("First1 Last1").length).toBeGreaterThan(0);
     // But no mutate controls are present.
     expect(screen.queryByRole("button", { name: /edit/i })).not.toBeInTheDocument();
-    expect(
-      screen.queryByRole("button", { name: /delete/i }),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /delete/i })).not.toBeInTheDocument();
   });
 });

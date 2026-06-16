@@ -16,9 +16,7 @@ export interface ListParams {
 }
 
 /** GET /patients with query params; response validated against the contract. */
-export async function listPatients(
-  params: ListParams,
-): Promise<PaginatedPatients> {
+export async function listPatients(params: ListParams): Promise<PaginatedPatients> {
   const res = await apiClient.get("/patients", { params });
   return paginatedPatientsSchema.parse(res.data);
 }
@@ -36,10 +34,7 @@ export async function createPatient(body: PatientForm): Promise<Patient> {
 }
 
 /** PUT /patients/:id (admin-only). */
-export async function updatePatient(
-  id: string,
-  body: Partial<PatientForm>,
-): Promise<Patient> {
+export async function updatePatient(id: string, body: Partial<PatientForm>): Promise<Patient> {
   const res = await apiClient.put(`/patients/${id}`, body);
   return patientSchema.parse(res.data);
 }

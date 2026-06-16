@@ -11,10 +11,7 @@ import {
   type Patient,
   type PatientForm,
 } from "@/lib/contracts/patient";
-import {
-  useCreatePatient,
-  useUpdatePatient,
-} from "@/lib/patients/hooks";
+import { useCreatePatient, useUpdatePatient } from "@/lib/patients/hooks";
 import type { ListParams } from "@/lib/patients/api";
 import { Button } from "@/components/ui/button";
 import {
@@ -111,18 +108,12 @@ export function PatientFormDialog({
         <DialogHeader>
           <DialogTitle>{isEdit ? "Edit patient" : "Add patient"}</DialogTitle>
           <DialogDescription>
-            {isEdit
-              ? "Update this patient's details."
-              : "Enter the patient's details to add them."}
+            {isEdit ? "Update this patient's details." : "Enter the patient's details to add them."}
           </DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            noValidate
-            className="space-y-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} noValidate className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <FormField
                 control={form.control}
@@ -154,9 +145,7 @@ export function PatientFormDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
-                  <FormControl
-                    render={<Input type="email" autoComplete="email" {...field} />}
-                  />
+                  <FormControl render={<Input type="email" autoComplete="email" {...field} />} />
                   <FormMessage />
                 </FormItem>
               )}
@@ -168,9 +157,7 @@ export function PatientFormDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Phone</FormLabel>
-                  <FormControl
-                    render={<Input type="tel" autoComplete="tel" {...field} />}
-                  />
+                  <FormControl render={<Input type="tel" autoComplete="tel" {...field} />} />
                   <FormMessage />
                 </FormItem>
               )}
@@ -189,9 +176,7 @@ export function PatientFormDialog({
             />
 
             <DialogFooter>
-              <DialogClose render={<Button variant="outline" type="button" />}>
-                Cancel
-              </DialogClose>
+              <DialogClose render={<Button variant="outline" type="button" />}>Cancel</DialogClose>
               <Button type="submit" disabled={isPending}>
                 {isPending ? (
                   <>
