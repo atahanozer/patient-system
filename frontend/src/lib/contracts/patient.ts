@@ -24,7 +24,21 @@ export const patientFormSchema = z.object({
   phoneNumber: z
     .string()
     .regex(/^\+?[\d\s().-]{7,}(?:\s*(?:x|ext\.?)\s*\d+)?$/i, "Enter a valid phone number"),
-  dob: z.string().min(1, "Date of birth is required"),
+  // CONTRACT: keep in sync with backend create-patient.dto.ts @IsDobInRange
+  // (year >= 1900 and date <= today). Parses the yyyy-MM-dd input value.
+  dob: z
+    .string()
+    .min(1, "Date of birth is required")
+    .refine(
+      (value) => {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return false;
+        const todayEnd = new Date();
+        todayEnd.setHours(23, 59, 59, 999);
+        return date.getUTCFullYear() >= 1900 && date.getTime() <= todayEnd.getTime();
+      },
+      { message: "Date of birth must be between 1900 and today" },
+    ),
 });
 export type PatientForm = z.infer<typeof patientFormSchema>;
 

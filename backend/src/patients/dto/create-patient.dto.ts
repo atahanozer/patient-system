@@ -1,5 +1,7 @@
 import { IsDateString, IsEmail, IsString, Matches, MinLength } from 'class-validator';
 
+import { IsDobInRange } from '../../common/validators/is-dob-in-range.validator';
+
 // CONTRACT: mirrored by the frontend zod schema in
 // frontend/src/lib/contracts/patient.ts (patientFormSchema) — keep field
 // names + validation rules in sync. No shared package by design (see TRADEOFFS.md).
@@ -25,7 +27,9 @@ export class CreatePatientDto {
   phoneNumber!: string;
 
   // Accepts a date-only string (e.g. '1990-01-01') at the boundary; the service
-  // converts it to a Date before persisting.
+  // converts it to a Date before persisting. IsDateString checks the format;
+  // IsDobInRange rejects absurd years (must be >= 1900-01-01 and not in the future).
   @IsDateString()
+  @IsDobInRange()
   dob!: string;
 }

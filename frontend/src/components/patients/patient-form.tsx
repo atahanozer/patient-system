@@ -20,6 +20,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
+// Native date-picker bounds, mirroring the zod range check (1900-01-01 .. today).
+// Computed once at module load so every render shares the same `max`.
+const MIN_DOB = "1900-01-01";
+const MAX_DOB = new Date().toISOString().slice(0, 10);
+
 const EMPTY_DEFAULTS: PatientFormValues = {
   firstName: "",
   lastName: "",
@@ -142,7 +147,7 @@ export function PatientForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Date of birth</FormLabel>
-              <FormControl render={<Input type="date" {...field} />} />
+              <FormControl render={<Input type="date" min={MIN_DOB} max={MAX_DOB} {...field} />} />
               <FormMessage />
             </FormItem>
           )}

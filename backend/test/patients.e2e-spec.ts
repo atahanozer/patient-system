@@ -187,6 +187,33 @@ describe('Patients API (e2e)', () => {
         .expect(400);
     });
 
+    it('8a. POST /patients with dob before 1900-01-01 → 400', async () => {
+      await request(server)
+        .post('/patients')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send({ ...newPatient(), email: `e2e-old+${RUN_ID}@test.local`, dob: '1899-12-31' })
+        .expect(400);
+    });
+
+    it('8b. POST /patients with a future dob → 400', async () => {
+      const future = new Date();
+      future.setUTCFullYear(future.getUTCFullYear() + 1);
+      const futureDob = future.toISOString().slice(0, 10);
+      await request(server)
+        .post('/patients')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send({ ...newPatient(), email: `e2e-future+${RUN_ID}@test.local`, dob: futureDob })
+        .expect(400);
+    });
+
+    it('8c. POST /patients with dob 1990-01-01 (in range) → 201', async () => {
+      await request(server)
+        .post('/patients')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send({ ...newPatient(), email: `e2e-valid-dob+${RUN_ID}@test.local`, dob: '1990-01-01' })
+        .expect(201);
+    });
+
     it('9. GET /patients/:id → 200; GET /patients/<random-uuid> → 404', async () => {
       expect(createdId).toBeDefined();
 
