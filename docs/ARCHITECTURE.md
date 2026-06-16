@@ -79,7 +79,7 @@ Subsequent requests:
 
 `ChaosInterceptor` exists to **make the frontend's resilience demonstrable** — without a real flaky dependency there's nothing for the UI's retry/rollback logic to react to.
 
-- **Gating:** controlled by `CHAOS_ENABLED` (**default `false`** for a smooth demo — set `true` to exercise the resilience paths), failure probability `CHAOS_FAILURE_RATE` (default `0.15`). It is **scoped to `PatientsController`**, never global — so it never breaks `/auth/login`, and e2e tests run with `CHAOS_ENABLED=false` for determinism.
+- **Gating:** controlled by `CHAOS_ENABLED` (**default `true`** to showcase the resilience paths — set `false` for a smooth run), failure probability `CHAOS_FAILURE_RATE` (default `0.15`). It is **scoped to `PatientsController`**, never global — so it never breaks `/auth/login`, and e2e tests run with `CHAOS_ENABLED=false` for determinism.
 - **Behavior:** every patients request gets 100–800 ms of latency; ~15% throw `ServiceUnavailableException` (**503**).
 - **Frontend response:** TanStack Query retries once (`retry: 1`); list/detail views show explicit error states with a **Retry** button; **mutations roll back** their optimistic cache update and toast "…failed — restored". A 503 on the detail page shows a retryable "couldn't load" state, distinct from a genuine 404.
 

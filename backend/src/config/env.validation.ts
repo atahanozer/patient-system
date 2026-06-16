@@ -22,9 +22,9 @@ export const envSchema = z.object({
     .string()
     .regex(/^\d+[smhd]$/, 'JWT_EXPIRES_IN must look like 60s, 15m, 1h or 7d')
     .default('1h'),
-  // DEMO: off by default for a smooth experience; set CHAOS_ENABLED=true to demo
+  // DEMO: on by default; set CHAOS_ENABLED=false to disable. When enabled it demos
   // the flaky-dependency resilience (simulated latency + ~15% 503s on /patients).
-  CHAOS_ENABLED: booleanFromString(false),
+  CHAOS_ENABLED: booleanFromString(true),
   CHAOS_FAILURE_RATE: z.coerce.number().min(0).max(1).default(0.15),
   CORS_ORIGIN: z.string().default('http://localhost:3000'),
   PORT: z.coerce.number().default(3001),
