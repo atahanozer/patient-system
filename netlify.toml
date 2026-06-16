@@ -1,0 +1,9 @@
+# Netlify build config. The frontend lives in frontend/; pinning `base` here means
+# Netlify builds the Next.js app (not the repo root, which only holds tooling).
+# The Next.js runtime plugin handles SSR/routing/redirects.
+[build]
+  base = "frontend"
+  command = "npm run build"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
