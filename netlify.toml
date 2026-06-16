@@ -4,6 +4,9 @@
 [build]
   base = "frontend"
   command = "npm run build"
+  # Relative to `base`, so this is frontend/.next — must differ from the base dir,
+  # otherwise the Next plugin errors ("publish cannot equal base").
+  publish = ".next"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
