@@ -18,8 +18,9 @@ describe('HealthController (e2e)', () => {
 
   it('GET /health returns { status: "ok" } (public, no auth)', async () => {
     const res = await request(app.getHttpServer()).get('/health').expect(200);
-    expect(res.body.status).toBe('ok');
-    expect(typeof res.body.timestamp).toBe('string');
+    const body = res.body as { status: string; timestamp: string };
+    expect(body.status).toBe('ok');
+    expect(typeof body.timestamp).toBe('string');
   });
 
   it('GET / is not a route (no leftover Hello World scaffold)', () => {
