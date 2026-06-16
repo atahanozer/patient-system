@@ -1,4 +1,4 @@
-# What we cut & why (this is a demo)
+# What I cut & why (this is a demo)
 
 This is a take-home demo, scoped to demonstrate full-stack judgment without
 over-building. Below is an honest account of what was intentionally left out and
@@ -10,12 +10,12 @@ under "shortcuts" is also annotated inline in the code with a `// DEMO:`,
 
 | Feature | Why it was cut |
 | --- | --- |
-| **Live cloud deploy** | Requires the reviewer's own cloud accounts + billing. The one-command Docker setup proves the images build and run end to end; see the deploy section in the root README. |
+| **Live cloud deploy** | Requires cloud accounts + billing. The one-command Docker setup proves the images build and run end to end; see the deploy section in the root README. |
 | **Playwright / full browser E2E** | The backend Supertest e2e suite (12 tests) covers the high-signal auth/RBAC/CRUD paths against a real DB, and frontend Vitest tests cover the component behavior — enough signal without a browser-driver layer. |
 | **Refresh-token rotation** | A short-lived access token is enough to demo auth; rotation/blocklisting is real auth infra, out of scope for a demo. |
 | **Password reset / email flows** | No mail provider in scope; users are seeded. |
 | **User management / signup UI** | Two seeded roles are enough to demo RBAC; a registration/admin-user UI adds surface without showing anything new. |
-| **Audit logging** | We log one line per request (`LoggingInterceptor`), but per-record audit trails are a compliance feature beyond a demo's scope. |
+| **Audit logging** | I log one line per request (`LoggingInterceptor`), but per-record audit trails are a compliance feature beyond a demo's scope. |
 | **Soft deletes** | Delete is a hard delete; soft-delete + restore is product surface not needed to show CRUD. |
 | **Multi-tenancy** | Single-tenant keeps the data model and authz simple; tenancy is a large cross-cutting concern. |
 | **Internationalization (i18n)** | English-only UI; i18n plumbing adds weight without demonstrating new skill here. |

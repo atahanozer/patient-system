@@ -107,8 +107,6 @@ The Docker images are production-ready multi-stage builds, so deploying is strai
 - Deploy the **backend** image alongside a **managed Postgres**, set `DATABASE_URL`, a strong `JWT_SECRET`, `CORS_ORIGIN` (= the public frontend URL), and `CHAOS_ENABLED=false`. The container migrates + seeds on boot.
 - Deploy the **frontend** image with `NEXT_PUBLIC_API_URL` set to the **public API URL at build time** (it's inlined into the client bundle).
 
-This wasn't actually executed here because it requires the reviewer's own cloud accounts and billing. The one-command Docker setup proves the images build and run end to end.
-
 ---
 
 See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), [`docs/API.md`](docs/API.md), and [`docs/TRADEOFFS.md`](docs/TRADEOFFS.md).
