@@ -1,0 +1,18 @@
+{
+  // Format on save with Prettier; auto-fix ESLint issues on save.
+  // Requires the recommended extensions (see .vscode/extensions.json).
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  // Only format files that have a Prettier config in scope (backend/ and frontend/
+  // each ship their own .prettierrc) — avoids reformatting unrelated files.
+  "prettier.requireConfig": true,
+  // Let the ESLint extension resolve each app's flat config from its own folder.
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }
+}
