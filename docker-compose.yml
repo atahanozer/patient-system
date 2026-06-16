@@ -34,7 +34,8 @@ services:
       DATABASE_URL: postgresql://patients:patients@db:5432/patients?schema=public
       JWT_SECRET: dev-only-change-me-in-prod
       JWT_EXPIRES_IN: 1h
-      CHAOS_ENABLED: "true"
+      # DEMO: off by default; flip to "true" to demo the flaky-dependency resilience.
+      CHAOS_ENABLED: "false"
       CHAOS_FAILURE_RATE: "0.15"
       CORS_ORIGIN: http://localhost:3000
       PORT: "3001"
