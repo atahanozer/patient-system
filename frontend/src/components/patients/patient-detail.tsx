@@ -14,11 +14,8 @@ import { Button } from "@/components/ui/button";
 import { PatientAvatar } from "./patient-avatar";
 import { formatDate, formatDob } from "./format";
 
-// Same code-split mutation dialogs used by the list.
-const PatientFormDialog = dynamic(
-  () => import("./patient-form-dialog").then((m) => m.PatientFormDialog),
-  { ssr: false },
-);
+// Editing from the detail view navigates to the dedicated admin-only Edit page
+// (/patients/[id]/edit); the list keeps its inline modal. Delete stays a dialog.
 const DeletePatientDialog = dynamic(
   () => import("./delete-patient-dialog").then((m) => m.DeletePatientDialog),
   { ssr: false },
@@ -42,7 +39,6 @@ export function PatientDetail({ patient }: { patient: Patient }) {
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
 
-  const [editOpen, setEditOpen] = React.useState(false);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
 
   const fullName = `${patient.firstName} ${patient.lastName}`;
@@ -73,7 +69,11 @@ export function PatientDetail({ patient }: { patient: Patient }) {
 
         {isAdmin ? (
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={() => setEditOpen(true)}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => router.push(`/patients/${patient.id}/edit`)}
+            >
               <PencilIcon className="size-4" />
               Edit
             </Button>
@@ -93,15 +93,6 @@ export function PatientDetail({ patient }: { patient: Patient }) {
           <Field label="Added" value={formatDate(patient.createdAt)} />
         </dl>
       </div>
-
-      {editOpen ? (
-        <PatientFormDialog
-          open={editOpen}
-          onOpenChange={setEditOpen}
-          patient={patient}
-          listParams={DETAIL_LIST_PARAMS}
-        />
-      ) : null}
 
       {deleteOpen ? (
         <DeletePatientDialog

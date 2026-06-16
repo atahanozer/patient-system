@@ -19,7 +19,11 @@ export const patientFormSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   email: z.email("Enter a valid email"),
-  phoneNumber: z.string().min(3, "Enter a valid phone number"),
+  // CONTRACT: keep in sync with backend create-patient.dto.ts @Matches regex
+  // (allows an optional x/ext extension so editing seeded numbers never fails here).
+  phoneNumber: z
+    .string()
+    .regex(/^\+?[\d\s().-]{7,}(?:\s*(?:x|ext\.?)\s*\d+)?$/i, "Enter a valid phone number"),
   dob: z.string().min(1, "Date of birth is required"),
 });
 export type PatientForm = z.infer<typeof patientFormSchema>;
