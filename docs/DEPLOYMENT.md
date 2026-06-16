@@ -34,6 +34,9 @@ part. Deploy the backend first to get its URL, then the frontend, then point COR
 ### 1a. Create the Postgres database
 1. Render dashboard → **New → Postgres**.
 2. Name it (e.g. `patients-db`), pick a region + the free plan, **Create**.
+   > **Free-tier expiry:** Render deletes free Postgres databases after ~30 days. That's fine
+   > for a short-lived demo (just redeploy/re-seed if it lapses). For something longer-lived,
+   > point `DATABASE_URL` at a Neon or Supabase free Postgres instead (no expiry).
 3. When it's ready, copy the **Internal Database URL** (used by services in the same Render region).
 
 ### 1b. Create the API web service
