@@ -1,5 +1,8 @@
 # Deployment guide — Frontend on Netlify, Backend + Postgres on Render
 
+> ✅ **Live now:** app → https://ubiquitous-dolphin-2513fa.netlify.app · API → https://patient-system-x950.onrender.com
+> The steps below are the exact path used to deploy it (reproduce or redeploy with them).
+
 This app is two deployables: a **NestJS API + PostgreSQL** and a **Next.js frontend**.
 Netlify is a great host for the Next.js frontend, but it isn't suited to a long‑running
 Nest server + a database — so the backend goes to **Render** (which also gives you a

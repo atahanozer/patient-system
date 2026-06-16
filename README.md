@@ -2,6 +2,20 @@
 
 A full-stack patient records application built as a take-home demo. A **NestJS + Prisma + PostgreSQL** API serves role-aware, paginated patient data; a **Next.js + React + Tailwind** frontend consumes it with optimistic updates, light/dark theming, and graceful handling of a deliberately flaky backend dependency. The whole stack runs with a single `docker compose up`.
 
+## Live demo
+
+| | URL |
+| --- | --- |
+| **App** (Netlify) | https://ubiquitous-dolphin-2513fa.netlify.app |
+| **API** (Render) | https://patient-system-x950.onrender.com |
+
+Sign in with the seeded accounts:
+
+- `admin@demo.health` / `Admin123!` — full CRUD
+- `user@demo.health` / `User123!` — view-only
+
+> Free-tier notes: the Render API may **cold-start (~30–60s)** on the first request after it's been idle. The chaos simulation (occasional latency + `503`s on `/patients`, which the UI retries / rolls back) is toggled by `CHAOS_ENABLED` on the API.
+
 ## Features
 
 - **Role-aware JWT auth** — bcrypt password check, signed JWT, bearer-token auth on every protected route.
@@ -100,12 +114,12 @@ patient-system/
         └── lib/              # api client, auth context, contracts (zod), query hooks
 ```
 
-## Deploying to the cloud (documented, not executed)
+## Deployment
 
-The Docker images are production-ready multi-stage builds, so deploying is straightforward on a host like **Render / Railway / Fly.io**:
+**It's live** — frontend on **Netlify**, backend + managed **Postgres** on **Render** (URLs in [Live demo](#live-demo) above). Full step-by-step (env vars, CORS wiring, free-tier caveats) is in [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md). In short:
 
-- Deploy the **backend** image alongside a **managed Postgres**, set `DATABASE_URL`, a strong `JWT_SECRET`, `CORS_ORIGIN` (= the public frontend URL), and `CHAOS_ENABLED=false`. The container migrates + seeds on boot.
-- Deploy the **frontend** image with `NEXT_PUBLIC_API_URL` set to the **public API URL at build time** (it's inlined into the client bundle).
+- **Backend** (Render): the multi-stage image migrates + seeds on boot; set `DATABASE_URL`, a strong `JWT_SECRET`, `CORS_ORIGIN` (= the Netlify URL), and `CHAOS_ENABLED`.
+- **Frontend** (Netlify): `netlify.toml` pins `base = frontend` + the Next.js runtime; set `NEXT_PUBLIC_API_URL` (= the Render API URL) at build time (it's inlined into the client bundle).
 
 ---
 

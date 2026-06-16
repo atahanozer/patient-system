@@ -8,10 +8,13 @@ under "shortcuts" is also annotated inline in the code with a `// DEMO:`,
 
 ## Cut features (not built)
 
+> **Note:** "Live cloud deploy" was originally on this list, but the app is now
+> **deployed** — frontend on Netlify, backend + Postgres on Render. See the root
+> README's [Live demo](../README.md#live-demo) and [`DEPLOYMENT.md`](./DEPLOYMENT.md).
+
 | Feature | Why it was cut |
 | --- | --- |
-| **Live cloud deploy** | Requires cloud accounts + billing. The one-command Docker setup proves the images build and run end to end; see the deploy section in the root README. |
-| **Playwright / full browser E2E** | The backend Supertest e2e suite (12 tests) covers the high-signal auth/RBAC/CRUD paths against a real DB, and frontend Vitest tests cover the component behavior — enough signal without a browser-driver layer. |
+| **Playwright / full browser E2E** | The backend Supertest e2e suite covers the high-signal auth/RBAC/CRUD paths against a real DB, and frontend Vitest tests cover the component behavior — enough signal without a browser-driver layer. |
 | **Refresh-token rotation** | A short-lived access token is enough to demo auth; rotation/blocklisting is real auth infra, out of scope for a demo. |
 | **Password reset / email flows** | No mail provider in scope; users are seeded. |
 | **User management / signup UI** | Two seeded roles are enough to demo RBAC; a registration/admin-user UI adds surface without showing anything new. |
@@ -38,5 +41,6 @@ under "shortcuts" is also annotated inline in the code with a `// DEMO:`,
 1. **`httpOnly` cookies + refresh tokens** — move the access token out of `localStorage` into a secure cookie, add short-lived access + rotating refresh tokens, and gate routes server-side.
 2. **Shared, generated contract package** — derive the FE zod schemas and BE DTOs from one source of truth to eliminate hand-sync drift.
 3. **Playwright E2E** — a browser-level happy-path suite (login → search → create → edit → delete → logout) on top of the existing unit/e2e tests.
-4. **Live cloud deploy** — stand the images up on Render/Railway/Fly with managed Postgres and wired-up env vars (chaos off).
-5. **Server-side rendering of the list** — render the first page of patients on the server (with cookie auth) for a faster first paint and better SEO/perceived performance.
+4. **Server-side rendering of the list** — render the first page of patients on the server (with cookie auth) for a faster first paint and better SEO/perceived performance.
+
+> Already done since the original cut list: **live cloud deploy** (Netlify + Render), a **CI-ready** pre-commit hook (husky + lint-staged), and **phone search + DOB/phone validation**.
