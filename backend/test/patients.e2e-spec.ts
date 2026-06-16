@@ -130,8 +130,9 @@ describe('Patients API (e2e)', () => {
         .expect(200);
 
       const seedBody = body<ListBody>(seed);
-      expect(seedBody.data.length).toBeGreaterThan(0);
-      const lastName = seedBody.data[0].lastName;
+      const first = seedBody.data[0];
+      expect(first).toBeDefined();
+      const lastName = first!.lastName;
 
       const res = await request(server)
         .get(`/patients?search=${encodeURIComponent(lastName)}`)

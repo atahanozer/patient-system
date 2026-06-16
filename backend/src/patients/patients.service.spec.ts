@@ -98,6 +98,7 @@ describe('PatientsService', () => {
             { firstName: { contains: 'lov', mode: 'insensitive' } },
             { lastName: { contains: 'lov', mode: 'insensitive' } },
             { email: { contains: 'lov', mode: 'insensitive' } },
+            { phoneNumber: { contains: 'lov', mode: 'insensitive' } },
           ],
         },
         skip: 10, // (3 - 1) * 5
